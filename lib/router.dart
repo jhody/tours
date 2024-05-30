@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:tours/common_libs.dart';
 import 'package:tours/ui/common/modals//fullscreen_video_viewer.dart';
-/*import 'package:tours/ui/common/modals/fullscreen_maps_viewer.dart';
-import 'package:tours/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
-import 'package:tours/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
-import 'package:tours/ui/screens/collection/collection_screen.dart';
+//import 'package:tours/ui/common/modals/fullscreen_maps_viewer.dart';
+//import 'package:tours/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
+//import 'package:tours/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
+//import 'package:tours/ui/screens/collection/collection_screen.dart';
 import 'package:tours/ui/screens/home/wonders_home_screen.dart';
 import 'package:tours/ui/screens/intro/intro_screen.dart';
 import 'package:tours/ui/screens/page_not_found/page_not_found.dart';
-import 'package:tours/ui/screens/timeline/timeline_screen.dart';
+/*import 'package:tours/ui/screens/timeline/timeline_screen.dart';
 import 'package:tours/ui/screens/wonder_details/wonders_details_screen.dart';*/
 
 class ScreenPaths {
@@ -17,7 +17,55 @@ class ScreenPaths {
   static String intro = '/welcome';
   static String home = '/home';
   static String settings = '/settings';
+
+  static String wonderDetails(WonderType type, {required int tabIndex}) =>
+      '$home/wonder/${type.name}?t=$tabIndex';
+
+  /// Dynamically nested pages, always added on to the existing path
+  static String video(String id) => _appendToCurrentPath('/video/$id');
+  static String search(WonderType type) =>
+      _appendToCurrentPath('/search/${type.name}');
+  static String maps(WonderType type) =>
+      _appendToCurrentPath('/maps/${type.name}');
+  static String timeline(WonderType? type) =>
+      _appendToCurrentPath('/timeline?type=${type?.name ?? ''}');
+  static String artifact(String id, {bool append = true}) =>
+      append ? _appendToCurrentPath('/artifact/$id') : '/artifact/$id';
+  static String collection(String id) =>
+      _appendToCurrentPath('/collection${id.isEmpty ? '' : '?id=$id'}');
+
+  static String _appendToCurrentPath(String newPath) {
+    final newPathUri = Uri.parse(newPath);
+    final currentUri = appRouter.routeInformationProvider.value.uri;
+    Map<String, dynamic> params = Map.of(currentUri.queryParameters);
+    params.addAll(newPathUri.queryParameters);
+    Uri? loc = Uri(
+        path: '${currentUri.path}/${newPathUri.path}'.replaceAll('//', '/'),
+        queryParameters: params);
+    return loc.toString();
+  }
 }
+
+// Routes that are used multiple times
+/*AppRoute get _artifactRoute => AppRoute(
+      'artifact/:artifactId',
+      (s) => ArtifactDetailsScreen(artifactId: s.pathParameters['artifactId']!),
+    );
+
+AppRoute get _timelineRoute {
+  return AppRoute(
+    'timeline',
+    (s) => TimelineScreen(type: _tryParseWonderType(s.uri.queryParameters['type']!)),
+  );
+}
+
+AppRoute get _collectionRoute {
+  return AppRoute(
+    'collection',
+    (s) => CollectionScreen(fromId: s.uri.queryParameters['id'] ?? ''),
+    routes: [_artifactRoute],
+  );
+}*/
 
 final appRouter = GoRouter(
   redirect: _handleRedirect,
@@ -33,7 +81,56 @@ final appRouter = GoRouter(
               ScreenPaths.splash,
               (_) => Container(
                   color: $styles.colors.greyStrong)), // This will be hidden
-          //AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
+          AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
+          /*AppRoute(
+              ScreenPaths.home,
+              (_) =>
+                  HomeScreen() /*, routes: [
+            _timelineRoute,
+            _collectionRoute,
+            AppRoute(
+              'wonder/:detailsType',
+              (s) {
+                int tab = int.tryParse(s.uri.queryParameters['t'] ?? '') ?? 0;
+                return WonderDetailsScreen(
+                  type: _parseWonderType(s.pathParameters['detailsType']),
+                  tabIndex: tab,
+                );
+              },
+              useFade: true,
+              // Wonder sub-routes
+              routes: [
+                _timelineRoute,
+                _collectionRoute,
+                _artifactRoute,
+                // Youtube Video
+                AppRoute('video/:videoId', (s) {
+                  return FullscreenVideoViewer(
+                      id: s.pathParameters['videoId']!);
+                }),
+
+                // Search
+                AppRoute(
+                  'search/:searchType',
+                  (s) {
+                    return ArtifactSearchScreen(
+                        type: _parseWonderType(s.pathParameters['searchType']));
+                  },
+                  routes: [
+                    _artifactRoute,
+                  ],
+                ),
+
+                // Maps
+                AppRoute(
+                    'maps/:mapsType',
+                    (s) => FullscreenMapsViewer(
+                          type: _parseWonderType(s.pathParameters['mapsType']),
+                        )),
+              ],
+            ),
+          ]*/
+              ),*/
         ]),
   ],
 );
@@ -47,7 +144,8 @@ class AppRoute extends GoRoute {
           pageBuilder: (context, state) {
             final pageContent = Scaffold(
               body: builder(state),
-              resizeToAvoidBottomInset: false,
+              resizeToAvoidBottomInset:
+                  false, //no ajustar el contenido cuando este presente el teclado
             );
             if (useFade) {
               return CustomTransitionPage(
@@ -59,6 +157,7 @@ class AppRoute extends GoRoute {
                 },
               );
             }
+            var ddd = CupertinoPage(child: pageContent);
             return CupertinoPage(child: pageContent);
           },
         );

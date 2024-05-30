@@ -1,0 +1,109 @@
+flutter_native_splash:
+  # Este paquete genera código nativo para personalizar la pantalla de presentación nativa blanca predeterminada de Flutter
+  # con color de fondo e imagen de bienvenida.
+  # Personalice los siguientes parámetros y ejecute el siguiente comando en la terminal:
+  # flutter pub ejecuta flutter_native_splash:create
+  # Para restaurar la pantalla de presentación blanca predeterminada de Flutter, ejecute el siguiente comando en la terminal:
+  # flutter pub ejecuta flutter_native_splash:eliminar
+
+  # color o background_image es el único parámetro requerido. Usar color para establecer el fondo
+  # de tu pantalla de inicio a un color sólido. Utilice background_image para establecer el fondo de su
+  # pantalla de presentación a una imagen png. Esto es útil para gradientes. La imagen se estirará hasta el
+  # tamaño de la aplicación. Solo se puede utilizar un parámetro, no se pueden configurar color y background_image al mismo tiempo.
+  color: "#272625"
+  #background_image: "assets/background.png"
+
+  # Los parámetros opcionales se enumeran a continuación. Para habilitar un parámetro, descomente la línea eliminando
+  # el # personaje principal.
+
+  # El parámetro de imagen le permite especificar una imagen utilizada en la pantalla de presentación. debe ser un
+  # archivo png y su tamaño debe tener una densidad de píxeles de 4x.
+  image: assets/images/_common/app-logo.png
+
+  # La propiedad de marca le permite especificar una imagen utilizada como marca en la pantalla de presentación.
+  # Debe ser un archivo png. Es compatible con Android <v12, iOS y la Web.
+  #marca:
+
+  # Para colocar la imagen de la marca en la parte inferior de la pantalla, puede usar abajo, abajo a la derecha,
+  # y abajo a la izquierda. El valor predeterminado es inferior si no se especifica o se especifica algo más.
+  #branding_mode: abajo
+
+  # Color_dark, background_image_dark, image_dark, branding_dark son parámetros que configuran el fondo
+  # e imagen cuando el dispositivo está en modo oscuro. Si no se especifican, la aplicación utilizará el
+  # parámetros desde arriba. Si se especifica el parámetro image_dark, color_dark o
+  Se debe especificar # background_image_dark. color_dark y background_image_dark no pueden ser ambos
+  # colocar.
+  #color_dark: "#042a49"
+  #background_image_dark: "assets/dark-background.png"
+  #image_dark: assets/splash-invert.png
+  #branding_dark: assets/dart_dark.png
+
+  # Android 12 maneja la pantalla de presentación de manera diferente a las versiones anteriores. Por favor visita
+  # https://developer.android.com/guide/topics/ui/splash-screen
+  # Los siguientes son los parámetros específicos de Android 12.
+  android_12:
+  # El parámetro de imagen establece la imagen del icono de la pantalla de presentación. Si no se especifica este parámetro,
+  # En su lugar, se utilizará el icono del iniciador de la aplicación.
+  # Tenga en cuenta que la pantalla de presentación se recortará en un círculo en el centro de la pantalla.
+  # Icono de aplicación con un fondo de icono: debe tener 960 × 960 píxeles y caber dentro de un círculo.
+  # 640 píxeles de diámetro.
+  # Icono de aplicación sin fondo de icono: debe tener 1152 × 1152 píxeles y caber dentro de un círculo.
+  # 768 píxeles de diámetro.
+   image: assets/marketing/app-logo-android12.png
+
+  # Color de fondo de la pantalla de bienvenida.
+   color: "#272625"
+
+  # Color de fondo del icono de la aplicación.
+  #icon_background_color: "#111111"
+
+  # El parámetro image_dark y icon_background_color_dark establecen el fondo de la imagen y el icono
+  # color cuando el dispositivo está en modo oscuro. Si no se especifican, la aplicación utilizará el
+  # parámetros desde arriba.
+  #image_dark: assets/android12splash-invert.png
+  #color_dark: "#042a49"
+  #icon_background_color_dark: "#eeeeee"
+
+  # Los parámetros de Android, iOS y Web se pueden utilizar para desactivar la generación de una pantalla de presentación en un determinado
+  # platform.
+  #android: false
+  #ios: false
+  #web: false
+
+  # La posición de la imagen de presentación se puede configurar con android_gravity, ios_content_mode y
+  # parámetros web_image_mode. Todo predeterminado al centro.
+  #
+  # android_gravity puede ser uno de los siguientes Android Gravity (ver
+  # https://developer.android.com/reference/android/view/Gravity): abajo, centro,
+  # centro_horizontal, centro_vertical, clip_horizontal, clip_vertical, final, relleno, relleno_horizontal,
+  # fill_vertical, izquierda, derecha, inicio o arriba.
+  #android_gravity: centro
+  #
+  # ios_content_mode puede ser uno de los siguientes iOS UIView.ContentMode (consulte
+  # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
+  # scaleAspectFit, scaleAspectFill, centro, arriba, abajo, izquierda, derecha, arriba a la izquierda, arriba a la derecha,
+  # abajo a la izquierda o abajo a la derecha.
+  #ios_content_mode: centro
+  #
+  # web_image_mode puede ser uno de los siguientes modos: centrar, contener, estirar y cubrir.
+  #web_image_mode: centro
+
+  # La orientación de la pantalla se puede configurar en Android con el parámetro android_screen_orientation.
+  # Los parámetros válidos se pueden encontrar aquí:
+  # https://developer.android.com/guide/topics/manifest/activity-element#screen
+  #android_screen_orientation: sensorPaisaje
+
+  # Para ocultar la barra de notificaciones, use el parámetro de pantalla completa. No tiene efecto en web desde web
+  # no tiene barra de notificaciones. El valor predeterminado es falso.
+  # NOTA: A diferencia de Android, iOS no mostrará automáticamente la barra de notificaciones cuando se cargue la aplicación.
+  # Para mostrar la barra de notificaciones, agregue el siguiente código a su aplicación Flutter:
+  # WidgetsFlutterBinding.ensureInitialized();
+  # SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom, SystemUiOverlay.top]);
+  #pantalla completa: verdadero
+
+  # Si ha cambiado el nombre de su archivo info.plist, puede especificar el nombre del archivo.
+  # con el parámetro info_plist_files. Elimine solo los caracteres # en las tres líneas siguientes,
+  # no elimines ningún espacio:
+  #info_plist_files:
+  # - 'ios/Runner/Info-Debug.plist'
+  # - 'ios/Runner/Info-Release.plist'
