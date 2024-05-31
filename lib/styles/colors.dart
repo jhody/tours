@@ -29,7 +29,7 @@ class AppColors {
         (isDark ? ThemeData.dark() : ThemeData.light()).textTheme;
     Color txtColor = white;
     ColorScheme colorScheme = ColorScheme(
-        // Map our custom theme to the Material ColorScheme
+        // Asigne nuestro tema personalizado al Material ColorScheme
         brightness: isDark ? Brightness.dark : Brightness.light,
         primary: accent1,
         primaryContainer: accent1,
@@ -44,8 +44,8 @@ class AppColors {
         onSecondary: Colors.white,
         error: Colors.red.shade400);
 
-    /// Now that we have ColorScheme and TextTheme, we can create the ThemeData
-    /// Also add on some extra properties that ColorScheme seems to miss
+    /// Ahora que tenemos ColorScheme y TextTheme, podemos crear ThemeData.
+    /// También agregue algunas propiedades adicionales que ColorScheme parece omitir
     var t =
         ThemeData.from(textTheme: txtTheme, colorScheme: colorScheme).copyWith(
       textSelectionTheme: TextSelectionThemeData(cursorColor: accent1),

@@ -2,7 +2,8 @@ part of 'wonders_home_screen.dart';
 
 class _VerticalSwipeController {
   _VerticalSwipeController(this.ticker, this.onSwipeComplete) {
-    swipeReleaseAnim = AnimationController(vsync: ticker)..addListener(handleSwipeReleaseAnimTick);
+    swipeReleaseAnim = AnimationController(vsync: ticker)
+      ..addListener(handleSwipeReleaseAnimTick);
   }
   final TickerProvider ticker;
   final swipeAmt = ValueNotifier<double>(0);
@@ -11,7 +12,7 @@ class _VerticalSwipeController {
   final VoidCallback onSwipeComplete;
   late final AnimationController swipeReleaseAnim;
 
-  /// When the _swipeReleaseAnim plays, sync its value to _swipeUpAmt
+  /// Cuando se reproduzca _swipeReleaseAnim, sincronice su valor con _swipeUpAmt
   void handleSwipeReleaseAnimTick() => swipeAmt.value = swipeReleaseAnim.value;
   void handleTapDown() => isPointerDown.value = true;
   void handleTapCancelled() => isPointerDown.value = false;
@@ -26,7 +27,9 @@ class _VerticalSwipeController {
     if (swipeReleaseAnim.isAnimating) swipeReleaseAnim.stop();
 
     isPointerDown.value = true;
-    double value = (swipeAmt.value - details.delta.dy / _pullToViewDetailsThreshold).clamp(0, 1);
+    double value =
+        (swipeAmt.value - details.delta.dy / _pullToViewDetailsThreshold)
+            .clamp(0, 1);
     if (value != swipeAmt.value) {
       swipeAmt.value = value;
       if (swipeAmt.value == 1) {
@@ -37,10 +40,13 @@ class _VerticalSwipeController {
     //print(_swipeUpAmt.value);
   }
 
-  /// Utility method to wrap a couple of ValueListenableBuilders and pass the values into a builder methods.
-  /// Saves the UI some boilerplate when subscribing to changes.
+  /// Método de utilidad para empaquetar un par de ValueListenableBuilders y pasar los valores a un método de construcción.
+  /// Guarda la interfaz de usuario en parte repetitiva al suscribirse a los cambios.
   Widget buildListener(
-      {required Widget Function(double swipeUpAmt, bool isPointerDown, Widget? child) builder, Widget? child}) {
+      {required Widget Function(
+              double swipeUpAmt, bool isPointerDown, Widget? child)
+          builder,
+      Widget? child}) {
     return ValueListenableBuilder<double>(
       valueListenable: swipeAmt,
       builder: (_, swipeAmt, __) => ValueListenableBuilder<bool>(
@@ -52,7 +58,7 @@ class _VerticalSwipeController {
     );
   }
 
-  /// Utility method to wrap a gesture detector and wire up the required handlers.
+  /// Método de utilidad para envolver un detector de gestos y conectar los controladores necesarios.
   Widget wrapGestureDetector(Widget child, {Key? key}) => GestureDetector(
       key: key,
       excludeFromSemantics: true,

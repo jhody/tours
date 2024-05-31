@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:tours/common_libs.dart';
 
-// Expandable timerange selector component that further refines Artifact Search based on date range.
+// Componente selector de rango de tiempo expandible que refinó aún más la búsqueda de artefactos según el rango de fechas.
 class RangeSelector extends StatefulWidget {
   static const double handleWidth = 20;
 
@@ -33,7 +33,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   // drag values:
   double _initStart = 0, _initEnd = 0, _initX = 0;
 
-  // shortcuts to make calculations less fussy:
+  // Atajos para hacer los cálculos menos complicados:
   double get _start => widget.start;
   double get _end => widget.end;
   double get _min => widget.min;

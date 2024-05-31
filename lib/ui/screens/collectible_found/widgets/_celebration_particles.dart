@@ -22,21 +22,22 @@ class _CelebrationParticles extends StatelessWidget {
           onTick: (controller, elapsed, size) {
             List<Particle> particles = controller.particles;
 
-            // calculate base distance from center & velocity based on width/height:
+            // calcule la distancia de la base desde el centro y la velocidad según el ancho/alto:
             final double d = min(size.width, size.height) * 0.3;
             final double v = d * 0.08;
 
-            // calculate an opacity multiplier based on time elapsed (ie. fade out):
-            controller.opacity = Curves.easeOutExpo.transform(max(0, 1 - elapsed.inMilliseconds / fadeMs));
+            // calcule un multiplicador de opacidad en función del tiempo transcurrido (es decir, desvanecimiento):
+            controller.opacity = Curves.easeOutExpo
+                .transform(max(0, 1 - elapsed.inMilliseconds / fadeMs));
             if (controller.opacity == 0) return;
 
-            // add new particles, reducing the number added each tick:
+            // agregue nuevas partículas, reduciendo el número agregado en cada tick:
             int addCount = particleCount ~/ 30;
             particleCount -= addCount;
             while (--addCount > 0) {
               final double angle = rnd.getRad();
               particles.add(Particle(
-                // adding random variation makes it more visually interesting:
+                // agregar variación aleatoria lo hace más interesante visualmente:
                 x: cos(angle) * d * rnd(0.8, 1),
                 y: sin(angle) * d * rnd(0.8, 1),
                 vx: cos(angle) * v * rnd(0.5, 1.5),
@@ -45,7 +46,7 @@ class _CelebrationParticles extends StatelessWidget {
               ));
             }
 
-            // update existing particles & remove old ones:
+            // actualice las partículas existentes y elimine las antiguas:
             for (int i = particles.length - 1; i >= 0; i--) {
               final Particle o = particles[i];
               o.update(frame: o.age ~/ 3);

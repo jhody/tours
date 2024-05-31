@@ -5,11 +5,11 @@ import 'package:tours/ui/common/modals//fullscreen_video_viewer.dart';
 import 'package:tours/ui/common/modals/fullscreen_maps_viewer.dart';
 import 'package:tours/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
 import 'package:tours/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
-//import 'package:tours/ui/screens/collection/collection_screen.dart';
+import 'package:tours/ui/screens/collection/collection_screen.dart';
 import 'package:tours/ui/screens/home/wonders_home_screen.dart';
 import 'package:tours/ui/screens/intro/intro_screen.dart';
 import 'package:tours/ui/screens/page_not_found/page_not_found.dart';
-/*import 'package:tours/ui/screens/timeline/timeline_screen.dart';*/
+import 'package:tours/ui/screens/timeline/timeline_screen.dart';
 import 'package:tours/ui/screens/wonder_details/wonders_details_screen.dart';
 
 class ScreenPaths {
@@ -21,7 +21,7 @@ class ScreenPaths {
   static String wonderDetails(WonderType type, {required int tabIndex}) =>
       '$home/wonder/${type.name}?t=$tabIndex';
 
-  /// Dynamically nested pages, always added on to the existing path
+  /// Páginas anidadas dinámicamente, siempre agregadas a la ruta existente
   static String video(String id) => _appendToCurrentPath('/video/$id');
   static String search(WonderType type) =>
       _appendToCurrentPath('/search/${type.name}');
@@ -46,8 +46,8 @@ class ScreenPaths {
   }
 }
 
-// Routes that are used multiple times
-/*AppRoute get _artifactRoute => AppRoute(
+// Rutas que se utilizan varias veces
+AppRoute get _artifactRoute => AppRoute(
       'artifact/:artifactId',
       (s) => ArtifactDetailsScreen(artifactId: s.pathParameters['artifactId']!),
     );
@@ -55,7 +55,8 @@ class ScreenPaths {
 AppRoute get _timelineRoute {
   return AppRoute(
     'timeline',
-    (s) => TimelineScreen(type: _tryParseWonderType(s.uri.queryParameters['type']!)),
+    (s) => TimelineScreen(
+        type: _tryParseWonderType(s.uri.queryParameters['type']!)),
   );
 }
 
@@ -65,7 +66,7 @@ AppRoute get _collectionRoute {
     (s) => CollectionScreen(fromId: s.uri.queryParameters['id'] ?? ''),
     routes: [_artifactRoute],
   );
-}*/
+}
 
 final appRouter = GoRouter(
   redirect: _handleRedirect,
@@ -83,8 +84,8 @@ final appRouter = GoRouter(
                   color: $styles.colors.greyStrong)), // This will be hidden
           AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
           AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
-            //_timelineRoute,
-            //_collectionRoute,
+            _timelineRoute,
+            _collectionRoute,
             AppRoute(
               'wonder/:detailsType',
               (s) {
@@ -96,7 +97,7 @@ final appRouter = GoRouter(
               },
               useFade: true,
               // Wonder sub-routes
-              /*routes: [
+              routes: [
                 _timelineRoute,
                 _collectionRoute,
                 _artifactRoute,
@@ -124,7 +125,7 @@ final appRouter = GoRouter(
                     (s) => FullscreenMapsViewer(
                           type: _parseWonderType(s.pathParameters['mapsType']),
                         )),
-              ],*/
+              ],
             ),
           ]),
         ]),
@@ -159,6 +160,9 @@ class AppRoute extends GoRoute {
         );
   final bool useFade;
 }
+
+String? get initialDeeplink => _initialDeeplink;
+String? _initialDeeplink;
 
 String? _handleRedirect(BuildContext context, GoRouterState state) {
   // Evite que alguien salga de `/` si la aplicación se está iniciando.

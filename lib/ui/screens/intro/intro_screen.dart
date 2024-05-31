@@ -67,7 +67,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Set the page data, as strings may have changed based on locale
+    // Establece los datos de la página, ya que las cadenas pueden haber cambiado según la configuración regional
     pageData = [
       _PageData($strings.introTitleJourney, $strings.introDescriptionNavigate,
           'camel', '1'),
@@ -77,13 +77,13 @@ class _IntroScreenState extends State<IntroScreen> {
           'statue', '3'),
     ];
 
-    // This view uses a full screen PageView to enable swipe navigation.
-    // However, we only want the title / description to actually swipe,
-    // so we stack a PageView with that content over top of all the other
-    // content, and line up their layouts.
+    // Esta vista utiliza una vista de página de pantalla completa para permitir la navegación mediante deslizamiento.
+    // Sin embargo, solo queremos que el título/descripción se deslice,
+    // entonces apilamos un PageView con ese contenido sobre todos los demás
+    // contenido y alinear sus diseños.
     final List<Widget> pages = pageData.map((e) => _Page(data: e)).toList();
 
-    /// Return resulting widget tree
+    /// Devolver el árbol de widgets resultante
     return DefaultTextColor(
       color: $styles.colors.offWhite,
       child: ColoredBox(

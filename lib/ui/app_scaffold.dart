@@ -9,21 +9,21 @@ class WondersAppScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Listen to the device size, and update AppStyle when it changes
+    // Escuche el tamaño del dispositivo y actualice AppStyle cuando cambie
     final mq = MediaQuery.of(context);
     appLogic.handleAppSizeChanged(mq.size);
-    // Set default timing for animations in the app
+    // Establecer el tiempo predeterminado para las animaciones en la aplicación
     Animate.defaultDuration = _style.times.fast;
-    // Create a style object that will be passed down the widget tree
+    // Cree un objeto de estilo que se transmitirá al árbol de widgets.
     _style = AppStyle(screenSize: context.sizePx);
     return KeyedSubtree(
       key: ValueKey($styles.scale),
       child: Theme(
         data: $styles.colors.toThemeData(),
-        // Provide a default texts style to allow Hero's to render text properly
+        // Proporcionar un estilo de texto predeterminado para permitir que Hero represente el texto correctamente
         child: DefaultTextStyle(
           style: $styles.text.body,
-          // Use a custom scroll behavior across entire app
+          // Utilice un comportamiento de desplazamiento personalizado en toda la aplicación
           child: ScrollConfiguration(
             behavior: AppScrollBehavior(),
             child: child,

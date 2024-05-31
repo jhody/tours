@@ -27,11 +27,18 @@ void main() async {
   FlutterNativeSplash.remove();
 }
 
+/// Get_Id: dependencias globales, servicios generales
+/// GetItMixin: permite a Get_Id interacturar con los Widget, gestionar las actualizaciones y cambios de estado
+/// GetItMixin simplifica la inyección de dependencias y las gestión de estado en widgets
+/// GetItMixin hace q los widgets reaccionen auto.. a los cambios en los servicios, set ahorra el setEstate()
+/// Permite que la logica del negocio(servicios) e interfaz(widgets) estén separadas y gestionadas de forma independiente
 /// Crea una aplicación usando el constructor [MaterialApp.router] y el `appRouter` global, una instancia de [GoRouter].
 class ToursApp extends StatelessWidget with GetItMixin {
   ToursApp({super.key});
   @override
   Widget build(BuildContext context) {
+    // whatchX: Escucha cambios en varias propiedades de un servicio
+    //callback donde devuelve un mapa de las propiedades q se van a escuchar q afectan al widget
     final locale = watchX((SettingsLogic s) => s.currentLocale);
     return MaterialApp.router(
       routeInformationProvider: appRouter.routeInformationProvider,
@@ -74,7 +81,8 @@ void registerSingletons() {
   // Localizations
   GetIt.I.registerLazySingleton<LocaleLogic>(() => LocaleLogic());
   // Home Widget Service
-  GetIt.I.registerLazySingleton<NativeWidgetService>(() => NativeWidgetService());
+  GetIt.I
+      .registerLazySingleton<NativeWidgetService>(() => NativeWidgetService());
 }
 
 /// Agregue azúcar de sintaxis para acceder rápidamente a los principales controladores "lógicos" de la aplicación

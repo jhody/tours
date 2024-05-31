@@ -23,8 +23,8 @@ class HomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-/// Shows a horizontally scrollable list PageView sandwiched between Foreground and Background layers
-/// arranged in a parallax style.
+/// Muestra una lista desplazable horizontalmente PageView intercalada entre las capas de primer plano y de fondo
+/// organizado en un parallax style.
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late final PageController _pageController;
@@ -35,15 +35,15 @@ class _HomeScreenState extends State<HomeScreen>
   late int _wonderIndex = 0;
   int get _numWonders => _wonders.length;
 
-  /// Used to polish the transition when leaving this page for the details view.
-  /// Used to capture the _swipeAmt at the time of transition, and freeze the wonder foreground in place as we transition away.
+  /// Se utiliza para pulir la transición al salir de esta página para la vista de detalles.
+  /// Se utiliza para capturar _swipeAmt en el momento de la transición y congelar el maravilloso primer plano en su lugar a medida que nos alejamos.
   double? _swipeOverride;
 
-  /// Used to let the foreground fade in when this view is returned to (from details)
+  /// Se utiliza para permitir que el primer plano se desvanezca cuando se regresa a esta vista (desde los detalles)
   bool _fadeInOnNextBuild = false;
 
-  /// All of the items that should fade in when returning from details view.
-  /// Using individual tweens is more efficient than tween the entire parent
+  /// Todos los elementos que deberían aparecer gradualmente al regresar de la vista de detalles.
+  /// Usar interpolaciones individuales es más eficiente que interpolar a todo el padre
   final _fadeAnims = <AnimationController>[];
 
   WonderData get currentWonder => _wonders[_wonderIndex];
@@ -56,9 +56,9 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    // Load previously saved wonderIndex if we have one
+    // Cargar wonderIndex previamente guardado si tenemos uno
     _wonderIndex = settingsLogic.prevWonderIndex.value ?? 0;
-    // allow 'infinite' scrolling by starting at a very high page number, add wonderIndex to start on the correct page
+    // permite el desplazamiento 'infinito' comenzando en un número de página muy alto, agrega WonderIndex para comenzar en la página correcta
     final initialPage = _numWonders * 100 + _wonderIndex;
     // Create page controller,
     _pageController =
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen>
   void _handlePageChanged(value) {
     final newIndex = value % _numWonders;
     if (newIndex == _wonderIndex) {
-      return; // Exit early if we're already on this page
+      return; // Exit early si ya estamos en esta página
     }
     setState(() {
       _wonderIndex = newIndex;
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   void _setPageIndex(int index, {bool animate = false}) {
     if (index == _wonderIndex) return;
-    // To support infinite scrolling, we can't jump directly to the pressed index. Instead, make it relative to our current position.
+    // Para admitir el desplazamiento infinito, no podemos saltar directamente al índice presionado. En su lugar, hágalo relativo a nuestra posición actual.
     final pos =
         ((_pageController.page ?? 0) / _numWonders).floor() * _numWonders;
     final newIndex = pos + index;
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen>
             /// Foreground illustrations and gradients
             _buildFgAndGradients(),
 
-            /// Controls that float on top of the various illustrations
+            /// Controles que flotan sobre las distintas ilustraciones.
             _buildFloatingUi(),
           ],
         ).animate().fadeIn(),
@@ -244,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     final gradientColor = currentWonder.type.bgColor;
     return Stack(children: [
-      /// Foreground gradient-1, gets darker when swiping up
+      /// Degradado de primer plano-1, se oscurece al deslizar hacia arriba
       BottomCenter(
         child: buildSwipeableBgGradient(gradientColor.withOpacity(.65)),
       ),
@@ -264,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen>
         });
       }),
 
-      /// Foreground gradient-2, gets darker when swiping up
+      /// Degradado de primer plano-2, se oscurece al deslizar hacia arriba
       BottomCenter(
         child: buildSwipeableBgGradient(gradientColor),
       ),
@@ -302,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen>
                               onIncrease: () => _setPageIndex(_wonderIndex + 1),
                               onDecrease: () => _setPageIndex(_wonderIndex - 1),
                               onTap: () => _showDetailsPage(),
-                              // Hide the title when the menu is open for visual polish
+                              // Ocultar el título cuando el menú esté abierto para pulir visualmente
                               child: WonderTitleText(currentWonder,
                                   enableShadows: true),
                             ),
@@ -322,17 +322,17 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
                   ),
 
-                  /// Animated arrow and background
-                  /// Wrap in a container that is full-width to make it easier to find for screen readers
+                  /// Flecha animada y fondo.
+                  /// Wrap en un contenedor de ancho completo para que sea más fácil de encontrar para los lectores de pantalla
                   Container(
                     width: double.infinity,
                     alignment: Alignment.center,
 
-                    /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                    /// Pierde el estado de los objetos secundarios cuando cambia el índice, esto volverá a ejecutar todo el conmutador animado y la flecha animada.
                     key: ValueKey(_wonderIndex),
                     child: Stack(
                       children: [
-                        /// Expanding rounded rect that grows in height as user swipes up
+                        /// Rectángulo redondeado expandible que crece en altura a medida que el usuario desliza hacia arriba
                         Positioned.fill(
                             child: _swipeController.buildListener(
                           builder: (swipeAmt, _, child) {
@@ -354,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen>
                           ),
                         )),
 
-                        /// Arrow Btn that fades in and out
+                        /// Flecha Btn que aparece y desaparece
                         _AnimatedArrowButton(
                             onTap: _showDetailsPage,
                             semanticTitle: currentWonder.title),

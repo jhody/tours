@@ -8,7 +8,7 @@ import 'package:tours/ui/screens/artifact/artifact_search/artifact_search_screen
 import 'package:tours/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
 import 'package:tours/ui/screens/artifact/artifact_search/time_range_selector/time_range_painter.dart';
 
-// Expandable timerange selector component that further refines Artifact Search based on date range.
+// Componente selector de rango de tiempo expandible que refinó aún más la búsqueda de artefactos según el rango de fechas.
 class ExpandingTimeRangeSelector extends StatefulWidget {
   const ExpandingTimeRangeSelector({
     super.key,

@@ -2,7 +2,11 @@ part of '../artifact_carousel_screen.dart';
 
 class _BottomTextContent extends StatelessWidget {
   const _BottomTextContent(
-      {super.key, required this.artifact, required this.height, required this.state, required this.shortMode});
+      {super.key,
+      required this.artifact,
+      required this.height,
+      required this.state,
+      required this.shortMode});
 
   final HighlightData artifact;
   final double height;
@@ -30,21 +34,26 @@ class _BottomTextContent extends StatelessWidget {
                     ignoringSemantics: false,
                     child: Semantics(
                       button: true,
-                      onIncrease: () => state._handleArtifactTap(_currentPage + 1),
-                      onDecrease: () => state._handleArtifactTap(_currentPage - 1),
+                      onIncrease: () =>
+                          state._handleArtifactTap(_currentPage + 1),
+                      onDecrease: () =>
+                          state._handleArtifactTap(_currentPage - 1),
                       onTap: () => state._handleArtifactTap(_currentPage),
                       liveRegion: true,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          // Force column to stretch horizontally so text is centered
+                          // Forzar que la columna se estire horizontalmente para que el texto quede centrado
                           SizedBox(width: double.infinity),
-                          // Stop text from scaling to make layout a little easier, it's already quite large
+                          // Evita que el texto se escale para facilitar un poco el diseño, ya es bastante grande
                           StaticTextScale(
                             child: Text(
                               artifact.title,
                               overflow: TextOverflow.ellipsis,
-                              style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2, fontSize: 32),
+                              style: $styles.text.h2.copyWith(
+                                  color: $styles.colors.black,
+                                  height: 1.2,
+                                  fontSize: 32),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),
