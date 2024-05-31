@@ -64,14 +64,14 @@ class AppLogic {
     await localeLogic.load();
 
     // Wonders Data
-    //wondersLogic.init();
+    wondersLogic.init();
 
     // Events
-    //timelineLogic.init();
+    timelineLogic.init();
 
     // Collectibles
-    //collectiblesLogic.init();
-    //await collectiblesLogic.load();
+    collectiblesLogic.init();
+    await collectiblesLogic.load();
 
     // Flag bootStrap as complete
     isBootstrapComplete = true;

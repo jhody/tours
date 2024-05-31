@@ -74,7 +74,7 @@ void registerSingletons() {
   // Localizations
   GetIt.I.registerLazySingleton<LocaleLogic>(() => LocaleLogic());
   // Home Widget Service
-  //GetIt.I.registerLazySingleton<NativeWidgetService>(() => NativeWidgetService());
+  GetIt.I.registerLazySingleton<NativeWidgetService>(() => NativeWidgetService());
 }
 
 /// Agregue azúcar de sintaxis para acceder rápidamente a los principales controladores "lógicos" de la aplicación

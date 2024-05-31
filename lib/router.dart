@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:tours/common_libs.dart';
 import 'package:tours/ui/common/modals//fullscreen_video_viewer.dart';
-//import 'package:tours/ui/common/modals/fullscreen_maps_viewer.dart';
-//import 'package:tours/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
-//import 'package:tours/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
+import 'package:tours/ui/common/modals/fullscreen_maps_viewer.dart';
+import 'package:tours/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
+import 'package:tours/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 //import 'package:tours/ui/screens/collection/collection_screen.dart';
 import 'package:tours/ui/screens/home/wonders_home_screen.dart';
 import 'package:tours/ui/screens/intro/intro_screen.dart';
 import 'package:tours/ui/screens/page_not_found/page_not_found.dart';
-/*import 'package:tours/ui/screens/timeline/timeline_screen.dart';
-import 'package:tours/ui/screens/wonder_details/wonders_details_screen.dart';*/
+/*import 'package:tours/ui/screens/timeline/timeline_screen.dart';*/
+import 'package:tours/ui/screens/wonder_details/wonders_details_screen.dart';
 
 class ScreenPaths {
   static String splash = '/';
@@ -82,12 +82,9 @@ final appRouter = GoRouter(
               (_) => Container(
                   color: $styles.colors.greyStrong)), // This will be hidden
           AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
-          /*AppRoute(
-              ScreenPaths.home,
-              (_) =>
-                  HomeScreen() /*, routes: [
-            _timelineRoute,
-            _collectionRoute,
+          AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
+            //_timelineRoute,
+            //_collectionRoute,
             AppRoute(
               'wonder/:detailsType',
               (s) {
@@ -99,7 +96,7 @@ final appRouter = GoRouter(
               },
               useFade: true,
               // Wonder sub-routes
-              routes: [
+              /*routes: [
                 _timelineRoute,
                 _collectionRoute,
                 _artifactRoute,
@@ -127,10 +124,9 @@ final appRouter = GoRouter(
                     (s) => FullscreenMapsViewer(
                           type: _parseWonderType(s.pathParameters['mapsType']),
                         )),
-              ],
+              ],*/
             ),
-          ]*/
-              ),*/
+          ]),
         ]),
   ],
 );
@@ -178,3 +174,12 @@ String? _handleRedirect(BuildContext context, GoRouterState state) {
   if (!kIsWeb) debugPrint('Navigate to: ${state.uri}');*/
   return null; // do nothing
 }
+
+WonderType _parseWonderType(String? value) {
+  const fallback = WonderType.chichenItza;
+  if (value == null) return fallback;
+  return _tryParseWonderType(value) ?? fallback;
+}
+
+WonderType? _tryParseWonderType(String value) =>
+    WonderType.values.asNameMap()[value];
